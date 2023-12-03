@@ -15,16 +15,15 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up Google Cloud SDK
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@main  # Use "main" as the version
       with:
-        version: 'latest'
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}  # Use the secret you created
 
     - name: Configure gcloud CLI
       run: |
         gcloud auth configure-docker
-        gcloud config set project playground-s-11-0cad7c4a
-        gcloud container clusters get-credentials my-cluster --region us-central1
+        gcloud config set project your-project-id
+        gcloud container clusters get-credentials your-cluster-name --region your-region
 
     - name: Deploy to Kubernetes
       run: |
