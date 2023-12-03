@@ -1,0 +1,29 @@
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - staging
+      - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Configure gcloud CLI
+      run: |
+        gcloud auth configure-docker
+        gcloud config set project playground-s-11-0cad7c4a
+        gcloud container clusters get-credentials my-cluster --region us-central1
+
+    - name: Deploy to Kubernetes
+      run: |
+        if [[ $GITHUB_REF == "refs/heads/staging" ]]; then
+          kubectl apply -f k8s/staging.yaml
+        elif [[ $GITHUB_REF == "refs/heads/prod" ]]; then
+          kubectl apply -f k8s/prod.yaml
+        fi
