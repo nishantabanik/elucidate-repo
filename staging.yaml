@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app-staging-pod
+  namespace: staging
+spec:
+  containers:
+  - name: my-staging-container
+    image: gcr.io/google.com/cloudsdktool/google-cloud-cli:latest
+    command: ["/bin/sh", "-c"]
+    args:
+    - while true; do
+        echo "Accessing staging bucket...";
+        gsutil ls gs://nisha-${formatdate("YYMM", timestamp())}-staging1;
+        sleep 60;
+      done
+
