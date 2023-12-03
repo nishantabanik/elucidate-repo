@@ -5,8 +5,8 @@ metadata:
   namespace: prod
 spec:
   containers:
-  - name: my-app-container
-    image: my-app-image:latest
+  - name: my-prod-container
+    image: gcr.io/google.com/cloudsdktool/google-cloud-cli:latest
     command: ["/bin/sh", "-c"]
     args:
     - while true; do
